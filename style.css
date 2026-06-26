@@ -176,6 +176,51 @@
     .split-layout { grid-template-columns: 1.7fr 1fr; }
   }
   
+  /* Top Sponsor Banner */
+  .top-banner {
+    background-color: var(--canvas-100);
+    border-bottom: 1px solid var(--line);
+    padding: 0.6rem 0;
+    width: 100%;
+  }
+  
+  .top-banner-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+  }
+  
+  .sponsor-logo-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .sponsor-logo {
+    height: 28px;
+    width: auto;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+  }
+  
+  .sponsor-logo:hover {
+    opacity: 1;
+  }
+  
+  .nsf-text {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 0.25rem;
+  }
+
   /* Sticky Header */
   .header {
     position: sticky;
