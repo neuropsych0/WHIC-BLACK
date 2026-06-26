@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHIC — Cortical Explorer | Graduate Cortical Neuroscience</title>
+  <meta name="description" content="An interactive graduate-level educational portal on the cerebral cortex. Explore cortical layers, canonical microcircuits, signal flow, E/I balance, and synaptic plasticity.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Typography Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- 3D model-viewer for brain model -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body>
+  
+  <!-- Sticky Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="#/home" class="logo-link" aria-label="WHIC Home">
+        <div class="logo-wrapper">
+          <img src="assets/whic_logo.svg" alt="WHIC Logo" class="logo-img header-logo">
+        </div>
+      </a>
+      
+      <!-- Hamburger Menu for Mobile -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Desktop/Mobile Navigation -->
+      <nav class="nav" id="mainNav">
+        <ul class="nav-list">
+          <li class="nav-item dropdown">
+            <button class="dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+              Five Topics <span class="arrow-indicator"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#/microcircuit">Canonical Microcircuit</a></li>
+              <li><a href="#/layers">Cortical Layers</a></li>
+              <li><a href="#/puzzle">Signal Flow Puzzle</a></li>
+              <li><a href="#/ei-balance">Excitation vs Inhibition</a></li>
+              <li><a href="#/quiz">Graduate Quiz</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <button class="dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+              More Cortex <span class="arrow-indicator"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#/cell-types">Cell Types Gallery</a></li>
+              <li><a href="#/map">Cortex Map</a></li>
+              <li><a href="#/plasticity">Plasticity (STDP)</a></li>
+              <li><a href="#/prediction">Prediction / Feedback</a></li>
+              <li><a href="#/multiscale">Brain to Synapse</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <button class="dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+              Academic Blog <span class="arrow-indicator"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#/blog-read">Read Blog</a></li>
+              <li><a href="#/blog-write">Write a Post</a></li>
+              <li><a href="#/blog-author">Ask an Author</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Notification Banner (Dynamic) -->
+  <div id="notificationBanner" class="notification-banner hidden" role="alert"></div>
+
+  <!-- Content Section Wrapper (SPA Views) -->
+  <main id="mainContent" class="main-content">
+    
+    <!-- MODULE 0: HOME PAGE (Academic Dashboard) -->
+    <section id="homeView" class="view-section hidden">
+      <div class="home-hero">
+        <span class="eyebrow">GRADUATE PORTAL ON CORTICAL ORGANIZATION</span>
+        <h1>What's Happening in the Cortex?</h1>
+        <p class="lead-text">
+          A graduate-level exploration of cortical architectures, biophysics, and signal routing across multiple scales. 
+          Investigate the canonical circuits, laminar dynamics, and synaptic features that coordinate mammalian cognition.
+        </p>
+        <div class="hero-actions">
+          <a href="#/microcircuit" class="btn btn-primary">Explore Canonical Microcircuit</a>
+          <a href="#/multiscale" class="btn btn-secondary">Run Multiscale Tour</a>
+        </div>
+      </div>
+
+      <!-- Multiscale Journey Horizontal Sequence -->
+      <div class="journey-container card">
+        <h2 class="card-title text-center">Cortical Scales of Organization</h2>
+        <div class="journey-timeline">
+          <a href="#/multiscale?scale=0" class="journey-node">
+            <span class="node-num">1</span>
+            <span class="node-label">Brain</span>
+          </a>
+          <div class="journey-line"></div>
+          <a href="#/multiscale?scale=1" class="journey-node">
+            <span class="node-num">2</span>
+            <span class="node-label">Cortex</span>
+          </a>
+          <div class="journey-line"></div>
+          <a href="#/multiscale?scale=3" class="journey-node">
+            <span class="node-num">3</span>
+            <span class="node-label">Column</span>
+          </a>
+          <div class="journey-line"></div>
+          <a href="#/multiscale?scale=2" class="journey-node">
+            <span class="node-num">4</span>
+            <span class="node-label">Layers</span>
+          </a>
+          <div class="journey-line"></div>
+          <a href="#/microcircuit" class="journey-node">
+            <span class="node-num">5</span>
+            <span class="node-label">Microcircuit</span>
+          </a>
+          <div class="journey-line"></div>
+          <a href="#/cell-types" class="journey-node">
+            <span class="node-num">6</span>
+            <span class="node-label">Cells</span>
+          </a>
+          <div class="journey-line"></div>
+          <a href="#/multiscale?scale=5" class="journey-node">
+            <span class="node-num">7</span>
+            <span class="node-label">Neurons</span>
+          </a>
+          <div class="journey-line"></div>
+          <a href="#/multiscale?scale=6" class="journey-node">
+            <span class="node-num">8</span>
+            <span class="node-label">Synapses</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Module Grid -->
+      <div class="module-grid">
+        <div class="module-card card">
+          <span class="card-tag tag-exc">Core Theory</span>
+          <h3>Canonical Microcircuit</h3>
+          <p>Analyze structural connectivity, synaptic weights, and routing rules across supragranular, granular, and infragranular populations.</p>
+          <a href="#/microcircuit" class="card-link">Launch Module &rarr;</a>
+        </div>
+        
+        <div class="module-card card">
+          <span class="card-tag tag-inh">Laminar Dynamics</span>
+          <h3>Cortical Layers Explorer</h3>
+          <p>Investigate the six classical histological layers of the neocortex, examining their inputs, outputs, cell types, and computational properties.</p>
+          <a href="#/layers" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-accent">Interactive Puzzle</span>
+          <h3>Signal Flow Puzzle</h3>
+          <p>Reconstruct the canonical pathway of feedforward processing, local gating, interlaminar projection, and feedback modulation.</p>
+          <a href="#/puzzle" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-exc">Biophysics</span>
+          <h3>Excitation vs Inhibition</h3>
+          <p>Modulate excitatory drive and inhibitory recruitment. Observe spike rasters and study stabilization, gain control, and sparse coding.</p>
+          <a href="#/ei-balance" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-accent">Self-Assessment</span>
+          <h3>Graduate Quiz</h3>
+          <p>Challenge your understanding with 13 rigorous, graduate-level multiple choice questions on cortical physiology and modeling.</p>
+          <a href="#/quiz" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-inh">Morphology</span>
+          <h3>Cell Types Gallery</h3>
+          <p>Study the morphology, biophysical signatures, projection profiles, and synaptic roles of key cortical interneurons and pyramidal cells.</p>
+          <a href="#/cell-types" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-input">System View</span>
+          <h3>Cortex Map</h3>
+          <p>Examine the lateral topography of the human neocortex. Map primary sensory, motor, and association areas and check hierarchy roles.</p>
+          <a href="#/map" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-exc">Synaptic</span>
+          <h3>STDP Plasticity</h3>
+          <p>Explore Spike-Timing-Dependent Plasticity. Adjust pre-post action potential delay times and observe weight changes.</p>
+          <a href="#/plasticity" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-accent">Computation</span>
+          <h3>Prediction / Feedback</h3>
+          <p>Analyze how top-down predictive templates integrate with bottom-up sensory streams to compute localized prediction errors.</p>
+          <a href="#/prediction" class="card-link">Launch Module &rarr;</a>
+        </div>
+
+        <div class="module-card card">
+          <span class="card-tag tag-input">Multiscale</span>
+          <h3>Brain to Synapse</h3>
+          <p>Embark on a visual multiscale tour from macroscopic 3D anatomy down to histological slices, Golgi columns, and EM synapses.</p>
+          <a href="#/multiscale" class="card-link">Launch Module &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 1: CANONICAL MICROCIRCUIT -->
+    <section id="microcircuitView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 1</span>
+          <h1>Canonical Microcircuit (CMC)</h1>
+          <p class="section-desc">Interactive SVG model of neocortical microconnectivity. Select cell populations or connections to view physiological profiles and parameter metrics.</p>
+        </div>
+      </div>
+      
+      <div class="split-layout">
+        <!-- SVG Interactive Area -->
+        <div class="layout-main card p-0 overflow-hidden relative">
+          <div class="svg-diagram-wrapper">
+            <svg id="cmcDiagram" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet" class="interactive-svg">
+              <!-- Layer Background Bands -->
+              <rect x="10" y="20" width="780" height="150" fill="var(--surface-2)" opacity="0.4" rx="4" />
+              <text x="25" y="45" class="svg-layer-label">SUPRAGRANULAR (Layers 1-3)</text>
+              
+              <rect x="10" y="190" width="780" height="130" fill="var(--surface-2)" opacity="0.7" rx="4" />
+              <text x="25" y="215" class="svg-layer-label">GRANULAR (Layer 4)</text>
+              
+              <rect x="10" y="340" width="780" height="160" fill="var(--surface-2)" opacity="0.4" rx="4" />
+              <text x="25" y="365" class="svg-layer-label">INFRAGRANULAR (Layers 5-6)</text>
+              
+              <!-- External Inputs Label -->
+              <text x="400" y="525" class="svg-layer-label text-center-anchor">EXTERNAL POISSON DRIVE</text>
+
+              <!-- CONNECTIONS GROUP -->
+              <g id="cmcConnectionsGroup">
+                <!-- Within-Layer E/I (grey) -->
+                <!-- L13: E <-> I -->
+                <path id="conn-L13_exc-L13_inh" d="M 270 95 Q 400 65 530 95" class="svg-conn conn-grey" marker-end="url(#arrow-exc)" />
+                <path id="conn-L13_inh-L13_exc" d="M 530 115 Q 400 145 270 115" class="svg-conn conn-grey" marker-end="url(#bar-inh)" />
+
+                <!-- L4: E <-> I -->
+                <path id="conn-L4_exc-L4_inh" d="M 270 235 Q 400 205 530 235" class="svg-conn conn-grey" marker-end="url(#arrow-exc)" />
+                <path id="conn-L4_inh-L4_exc" d="M 530 255 Q 400 285 270 255" class="svg-conn conn-grey" marker-end="url(#bar-inh)" />
+
+                <!-- L56: E <-> I -->
+                <path id="conn-L56_exc-L56_inh" d="M 270 395 Q 400 365 530 395" class="svg-conn conn-grey" marker-end="url(#arrow-exc)" />
+                <path id="conn-L56_inh-L56_exc" d="M 530 415 Q 400 445 270 415" class="svg-conn conn-grey" marker-end="url(#bar-inh)" />
+
+                <!-- Interlaminar Excitatory (green) -->
+                <!-- L13_exc -> L56_exc (0.25) -->
+                <path id="conn-L13_exc-L56_exc" d="M 230 120 C 190 180, 190 320, 230 380" class="svg-conn conn-green" marker-end="url(#arrow-exc)" />
+                
+                <!-- L4_exc -> L56_exc (0.25) -->
+                <path id="conn-L4_exc-L56_exc" d="M 240 260 Q 220 325 240 390" class="svg-conn conn-green" marker-end="url(#arrow-exc)" />
+                
+                <!-- L56_exc -> L4_inh (0.25) -->
+                <path id="conn-L56_exc-L4_inh" d="M 260 390 C 310 350, 480 300, 530 270" class="svg-conn conn-green" marker-end="url(#arrow-exc)" />
+                
+                <!-- L56_exc -> L4_exc (0.0625) -->
+                <path id="conn-L56_exc-L4_exc" d="M 235 390 Q 200 325 235 265" class="svg-conn conn-green" marker-end="url(#arrow-exc)" />
+
+                <!-- Feedforward (orange) -->
+                <!-- L4_exc -> L13_exc (0.25) [label NEW] -->
+                <path id="conn-L4_exc-L13_exc" d="M 245 235 Q 220 170 245 125" class="svg-conn conn-orange" marker-end="url(#arrow-exc)" />
+
+                <!-- Recurrent E->E (red) -->
+                <!-- L13_exc recurrent -->
+                <path id="conn-L13_exc-L13_exc" d="M 230 95 C 170 95, 170 125, 230 125" class="svg-conn conn-red" marker-end="url(#arrow-exc)" />
+                
+                <!-- L4_exc recurrent -->
+                <path id="conn-L4_exc-L4_exc" d="M 230 235 C 170 235, 170 265, 230 265" class="svg-conn conn-red" marker-end="url(#arrow-exc)" />
+                
+                <!-- L56_exc recurrent -->
+                <path id="conn-L56_exc-L56_exc" d="M 230 395 C 170 395, 170 425, 230 425" class="svg-conn conn-red" marker-end="url(#arrow-exc)" />
+
+                <!-- External Poisson inputs (dashed amber) -->
+                <!-- FF L4 -> L4_exc -->
+                <path id="conn-feedforward_input_L4-L4_exc" d="M 120 525 C 120 440, 200 320, 240 270" class="svg-conn conn-amber" marker-end="url(#arrow-exc)" />
+                
+                <!-- FB L13 -> L13_exc -->
+                <path id="conn-feedback_input_L13-L13_exc" d="M 370 525 C 370 380, 280 220, 260 130" class="svg-conn conn-amber" marker-end="url(#arrow-exc)" />
+                
+                <!-- FB L13 -> L13_inh -->
+                <path id="conn-feedback_input_L13-L13_inh" d="M 380 525 C 400 380, 500 220, 545 130" class="svg-conn conn-amber" marker-end="url(#arrow-exc)" />
+                
+                <!-- FB L56 -> L56_exc -->
+                <path id="conn-feedback_input_L56-L56_exc" d="M 620 525 C 600 480, 350 440, 270 420" class="svg-conn conn-amber" marker-end="url(#arrow-exc)" />
+                
+                <!-- FB L56 -> L56_inh -->
+                <path id="conn-feedback_input_L56-L56_inh" d="M 630 525 Q 630 480, 570 430" class="svg-conn conn-amber" marker-end="url(#arrow-exc)" />
+              </g>
+
+              <!-- POPULATIONS GROUP -->
+              <g id="cmcPopulationsGroup">
+                <!-- Excitatory Nodes (Left, Triangles) -->
+                <!-- L13_exc -->
+                <g id="node-L13_exc" class="svg-node node-exc">
+                  <polygon points="250,75 220,125 280,125" />
+                  <text x="250" y="112" class="svg-node-label">E13</text>
+                </g>
+                <!-- L4_exc -->
+                <g id="node-L4_exc" class="svg-node node-exc">
+                  <polygon points="250,215 220,265 280,265" />
+                  <text x="250" y="252" class="svg-node-label">E4</text>
+                </g>
+                <!-- L56_exc -->
+                <g id="node-L56_exc" class="svg-node node-exc">
+                  <polygon points="250,375 220,425 280,425" />
+                  <text x="250" y="412" class="svg-node-label">E56</text>
+                </g>
+
+                <!-- Inhibitory Nodes (Right, Circles) -->
+                <!-- L13_inh -->
+                <g id="node-L13_inh" class="svg-node node-inh">
+                  <circle cx="550" cy="105" r="28" />
+                  <text x="550" y="109" class="svg-node-label">I13</text>
+                </g>
+                <!-- L4_inh -->
+                <g id="node-L4_inh" class="svg-node node-inh">
+                  <circle cx="550" cy="245" r="28" />
+                  <text x="550" y="249" class="svg-node-label">I4</text>
+                </g>
+                <!-- L56_inh -->
+                <g id="node-L56_inh" class="svg-node node-inh">
+                  <circle cx="550" cy="405" r="28" />
+                  <text x="550" y="409" class="svg-node-label">I56</text>
+                </g>
+              </g>
+
+              <!-- INPUT DRIVES GROUP -->
+              <g id="cmcInputsGroup">
+                <!-- Feedforward L4 input -->
+                <g id="input-feedforward_input_L4" class="svg-input-node">
+                  <rect x="50" y="525" width="140" height="30" rx="6" />
+                  <text x="120" y="544" class="svg-input-label">FF Drive (L4)</text>
+                </g>
+                <!-- Feedback L13 input -->
+                <g id="input-feedback_input_L13" class="svg-input-node">
+                  <rect x="300" y="525" width="150" height="30" rx="6" />
+                  <text x="375" y="544" class="svg-input-label">FB Template (L1/3)</text>
+                </g>
+                <!-- Feedback L56 input -->
+                <g id="input-feedback_input_L56" class="svg-input-node">
+                  <rect x="550" y="525" width="150" height="30" rx="6" />
+                  <text x="625" y="544" class="svg-input-label">FB Modulation (L5/6)</text>
+                </g>
+              </g>
+
+              <!-- SVG Markers -->
+              <defs>
+                <!-- Excitatory Arrowhead -->
+                <marker id="arrow-exc" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="oklch(0.68 0.17 27)" />
+                </marker>
+                <!-- Inhibitory Bar Terminal -->
+                <marker id="bar-inh" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 5 0 L 5 10" stroke="oklch(0.70 0.13 250)" stroke-width="4.5" />
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          
+          <!-- Instructions overlay -->
+          <div class="diagram-overlay">
+            <span class="mono-label">Interactive SVG &bull; Hover to highlight connections &bull; Click nodes or edges to inspect properties</span>
+          </div>
+        </div>
+        
+        <!-- Inspector Details Panel -->
+        <div class="layout-side flex flex-col gap-6">
+          <div id="cmcInspectorPanel" class="card panel-active">
+            <h2 class="panel-title" id="inspectorTitle">Select a Population or Connection</h2>
+            <div class="panel-subtitle" id="inspectorSubtitle">Click elements in the diagram to inspect their properties.</div>
+            
+            <hr class="panel-divider">
+            
+            <div id="inspectorContent" class="panel-body">
+              <div class="placeholder-text">
+                <p>Neocortical microcircuits exhibit stereotype patterns of connectivity where specific laminar populations play unique roles in incoming sensory information processing, local feedback, and downstream routing.</p>
+                <p>Use the diagram on the left to inspect populations (E/I nodes in layers 1-3, 4, 5-6), input drives (external feedforward/feedback sources), or any of the 19 distinct connections between them.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Global Model Parameters Panel -->
+      <div class="card mt-6">
+        <h2 class="card-title">Canonical Model Parameter Matrix</h2>
+        <p class="section-desc mb-4">Values reflect default simulation configurations for 50 Izhikevich neurons per population under Poisson stimulation drives. These parameters define network-level dynamics.</p>
+        <div class="grid-thirds text-sm">
+          <div class="panel-sub-card">
+            <span class="mono-label label-heading">POPULATION CONFIG</span>
+            <ul class="parameter-list">
+              <li><strong>Neurons / Population:</strong> 50 (300 total)</li>
+              <li><strong>Neuron Spiking Model:</strong> Izhikevich Reduced Spiking</li>
+              <li><strong>Excitatory Time Constant:</strong> \(\tau_m = 20\) ms</li>
+              <li><strong>Inhibitory Time Constant:</strong> \(\tau_m = 10\) ms</li>
+            </ul>
+          </div>
+          <div class="panel-sub-card">
+            <span class="mono-label label-heading">SYNAPTIC STRENGTHS</span>
+            <ul class="parameter-list">
+              <li><strong>Intralaminar E &rarr; I Weight:</strong> 25 nS</li>
+              <li><strong>Intralaminar I &rarr; E Weight:</strong> 10 nS</li>
+              <li><strong>Recurrent E &rarr; E Weight:</strong> 5 nS</li>
+              <li><strong>STDP Plasticity:</strong> Active (Intracortical)</li>
+            </ul>
+          </div>
+          <div class="panel-sub-card">
+            <span class="mono-label label-heading">EXTERNAL STIMULATION</span>
+            <ul class="parameter-list">
+              <li><strong>Poisson Background Rate:</strong> 10 Hz</li>
+              <li><strong>Poisson Pulse Tone Rate:</strong> 100 Hz</li>
+              <li><strong>Tone Pulse Duration:</strong> 50 ms</li>
+              <li><strong>Poisson Projection Mode:</strong> Fixed weights</li>
+            </ul>
+          </div>
+        </div>
+        <div class="caveat-box mt-4">
+          <strong>Scientific Caveat:</strong> The connection probabilities and weights displayed here represent standardized cortical model parameters rather than immutable biological constants. Actual synaptic parameters vary dynamically across species, cortical regions (e.g., V1 vs. PFC), and developmental stages.
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 2: CORTICAL LAYERS EXPLORER -->
+    <section id="layersView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 2</span>
+          <h1>Cortical Layers Explorer</h1>
+          <p class="section-desc">Examine the six-layered structure of the neocortex. Each layer hosts specialized neural populations optimized for input gating, local computation, or target projection.</p>
+        </div>
+      </div>
+
+      <div class="split-layout">
+        <!-- Layer List (Left Column) -->
+        <div class="layout-main flex flex-col gap-3">
+          <div class="layer-list-container">
+            <button class="layer-tab-btn" data-layer="L1">
+              <span class="layer-tab-num">L1</span>
+              <span class="layer-tab-name">Layer I: Molecular Layer</span>
+            </button>
+            <button class="layer-tab-btn" data-layer="L23">
+              <span class="layer-tab-num">L2/3</span>
+              <span class="layer-tab-name">Layer II/III: External Granular & Pyramidal</span>
+            </button>
+            <button class="layer-tab-btn" data-layer="L4">
+              <span class="layer-tab-num">L4</span>
+              <span class="layer-tab-name">Layer IV: Internal Granular</span>
+            </button>
+            <button class="layer-tab-btn" data-layer="L5">
+              <span class="layer-tab-num">L5</span>
+              <span class="layer-tab-name">Layer V: External/Internal Pyramidal</span>
+            </button>
+            <button class="layer-tab-btn" data-layer="L6">
+              <span class="layer-tab-num">L6</span>
+              <span class="layer-tab-name">Layer VI: Multiform Layer</span>
+            </button>
+            <button class="layer-tab-btn" data-layer="WM">
+              <span class="layer-tab-num">WM</span>
+              <span class="layer-tab-name">White Matter: Projection Tracts</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Layer Details Inspector (Right Column) -->
+        <div class="layout-side flex flex-col gap-6">
+          <div id="layerDetailPanel" class="card panel-active">
+            <h2 class="panel-title" id="layerDetailTitle">Select a Layer</h2>
+            <p class="panel-subtitle" id="layerDetailSubtitle">Click a layer button to inspect its anatomical and physiological parameters.</p>
+            
+            <hr class="panel-divider">
+
+            <div id="layerDetailContent" class="panel-body">
+              <div class="placeholder-text">
+                <p>The neocortex displays a laminar distribution. Neurons are structured in six layers parallel to the cortical surface, reflecting input/output segregation:</p>
+                <ul>
+                  <li><strong>Supragranular (L1-3):</strong> Local connectivity and feedback integrations.</li>
+                  <li><strong>Granular (L4):</strong> Primary feedforward sensory inputs.</li>
+                  <li><strong>Infragranular (L5-6):</strong> Output projections to subcortical areas and long-range feedback.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 3: SIGNAL FLOW PUZZLE -->
+    <section id="puzzleView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 3</span>
+          <h1>Signal Flow Puzzle</h1>
+          <p class="section-desc">Reconstruct the chronological order of cortical signal routing. Drag or click the scrambled pathway tiles on the left into the correct sequential slot on the right.</p>
+        </div>
+      </div>
+
+      <div class="puzzle-layout">
+        <!-- Scrambled Tiles -->
+        <div class="puzzle-source-card card">
+          <h2 class="card-title">Scrambled Pathway Tiles</h2>
+          <p class="text-xs text-soft mb-4">Click a tile, then click a slot on the right to place it. Or drag them if your device supports it.</p>
+          <div id="scrambledTiles" class="tiles-container">
+            <!-- Dynamic Tiles -->
+          </div>
+        </div>
+
+        <!-- Slots list -->
+        <div class="puzzle-slots-card card">
+          <h2 class="card-title">Chronological Pathway</h2>
+          <div id="slotsContainer" class="slots-container">
+            <!-- 7 Slots -->
+            <div class="puzzle-slot-row" data-slot="1">
+              <span class="slot-number">1</span>
+              <div class="puzzle-slot" id="slot-1" dropzone="copy">Drop Step 1 Here</div>
+              <div class="slot-feedback"></div>
+            </div>
+            <div class="puzzle-slot-row" data-slot="2">
+              <span class="slot-number">2</span>
+              <div class="puzzle-slot" id="slot-2" dropzone="copy">Drop Step 2 Here</div>
+              <div class="slot-feedback"></div>
+            </div>
+            <div class="puzzle-slot-row" data-slot="3">
+              <span class="slot-number">3</span>
+              <div class="puzzle-slot" id="slot-3" dropzone="copy">Drop Step 3 Here</div>
+              <div class="slot-feedback"></div>
+            </div>
+            <div class="puzzle-slot-row" data-slot="4">
+              <span class="slot-number">4</span>
+              <div class="puzzle-slot" id="slot-4" dropzone="copy">Drop Step 4 Here</div>
+              <div class="slot-feedback"></div>
+            </div>
+            <div class="puzzle-slot-row" data-slot="5">
+              <span class="slot-number">5</span>
+              <div class="puzzle-slot" id="slot-5" dropzone="copy">Drop Step 5 Here</div>
+              <div class="slot-feedback"></div>
+            </div>
+            <div class="puzzle-slot-row" data-slot="6">
+              <span class="slot-number">6</span>
+              <div class="puzzle-slot" id="slot-6" dropzone="copy">Drop Step 6 Here</div>
+              <div class="slot-feedback"></div>
+            </div>
+            <div class="puzzle-slot-row" data-slot="7">
+              <span class="slot-number">7</span>
+              <div class="puzzle-slot" id="slot-7" dropzone="copy">Drop Step 7 Here</div>
+              <div class="slot-feedback"></div>
+            </div>
+          </div>
+
+          <div class="puzzle-actions mt-6">
+            <button class="btn btn-primary" id="checkPuzzleBtn">Check Answers</button>
+            <button class="btn btn-secondary" id="resetPuzzleBtn">Reset Puzzle</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Puzzle Explanation Panel -->
+      <div id="puzzleExplanationCard" class="card mt-6 hidden">
+        <h3 id="puzzleExplanationTitle">Pathway Assessment</h3>
+        <p id="puzzleExplanationBody" class="text-sm text-soft"></p>
+      </div>
+    </section>
+
+    <!-- MODULE 4: EXCITATION VS INHIBITION -->
+    <section id="ei-balanceView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 4</span>
+          <h1>Excitation vs Inhibition (E/I Balance)</h1>
+          <p class="section-desc">Adjust sliders for excitatory drive and inhibitory recruitment to transition the network through distinct functional regimes.</p>
+        </div>
+      </div>
+
+      <div class="split-layout">
+        <!-- Control Sliders & Spike Raster -->
+        <div class="layout-main card flex flex-col gap-6">
+          <div class="grid-halves">
+            <div class="control-group">
+              <label for="excSlider" class="slider-label flex-between">
+                <span>Excitatory Drive (\(I_{exc}\))</span>
+                <span id="excVal" class="mono-label label-exc">50%</span>
+              </label>
+              <input type="range" id="excSlider" min="0" max="100" value="50" class="styled-slider exc-slider">
+            </div>
+            <div class="control-group">
+              <label for="inhSlider" class="slider-label flex-between">
+                <span>Inhibitory Recruitment (\(I_{inh}\))</span>
+                <span id="inhVal" class="mono-label label-inh">50%</span>
+              </label>
+              <input type="range" id="inhSlider" min="0" max="100" value="50" class="styled-slider inh-slider">
+            </div>
+          </div>
+
+          <!-- Needle Gauge & Regime Name -->
+          <div class="ei-gauge-container flex-col flex-center">
+            <div class="gauge-display-wrapper flex-center">
+              <canvas id="eiGaugeCanvas" width="240" height="130" class="gauge-canvas"></canvas>
+            </div>
+            <div class="gauge-label-box text-center">
+              <div class="regime-name" id="regimeTitle">Balanced State</div>
+              <div class="regime-desc" id="regimeDesc">E/I ratio matches normal physiological dynamics.</div>
+            </div>
+          </div>
+
+          <!-- Live Spike Raster Canvas -->
+          <div class="raster-container">
+            <div class="flex-between mb-2">
+              <span class="mono-label text-xs">Simulated Spike Raster (50 Neurons per Population, 200ms Window)</span>
+              <span class="mono-label text-xs" id="rasterFreq">Avg Freq: 12 Hz</span>
+            </div>
+            <canvas id="rasterCanvas" width="600" height="220" class="raster-canvas"></canvas>
+            <div class="flex-between mt-1 text-2xs text-faint">
+              <span>0ms</span>
+              <span>100ms</span>
+              <span>200ms</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept Cards -->
+        <div class="layout-side flex flex-col gap-4">
+          <div class="card bg-surface-2 border-line">
+            <span class="mono-label text-2xs text-exc">Physiological Principle</span>
+            <h3 class="mt-2 text-md">Excitation-Inhibition Balance</h3>
+            <p class="text-xs text-soft mt-1">Neocortical networks operate in a tightly regulated state where excitatory inputs are tracked closely by proportional local inhibition, stabilizing activity within millisecond scales.</p>
+          </div>
+
+          <div class="card bg-surface-2 border-line">
+            <span class="mono-label text-2xs text-inh">Circuit Control</span>
+            <h3 class="mt-2 text-md">Gain Control</h3>
+            <p class="text-xs text-soft mt-1">Inhibitory interneurons serve as divisive gain controllers, scaling dynamic range and preventing saturation of excitatory outputs during intense sensory stimulation.</p>
+          </div>
+
+          <div class="card bg-surface-2 border-line">
+            <span class="mono-label text-2xs text-accent">Computational Motif</span>
+            <h3 class="mt-2 text-md">Sparse Coding</h3>
+            <p class="text-xs text-soft mt-1">Strong feedback inhibition silences weak responses, ensuring that only neurons with high selectivity fire. This saves metabolic energy and increases informational capacity.</p>
+          </div>
+
+          <div class="card bg-surface-2 border-line">
+            <span class="mono-label text-2xs text-warn">Pathological State</span>
+            <h3 class="mt-2 text-md">Hyperexcitability</h3>
+            <p class="text-xs text-soft mt-1">Loss of parvalbumin-positive (PV+) local inhibition breaks stabilization, triggering runaway positive feedback loop patterns reminiscent of epileptic discharges.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 5: GRADUATE QUIZ -->
+    <section id="quizView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 5</span>
+          <h1>Graduate Neurophysiology Assessment</h1>
+          <p class="section-desc">Challenge your understanding of cortical organization, laminar microcircuits, and biophysics. 13 advanced multiple-choice questions.</p>
+        </div>
+      </div>
+
+      <div class="quiz-container max-w-3xl card mx-auto">
+        <!-- Quiz progress -->
+        <div class="quiz-progress-bar-container">
+          <div class="quiz-progress-fill" id="quizProgressFill" style="width: 0%;"></div>
+        </div>
+        <div class="flex-between text-xs text-faint mb-4 mt-2">
+          <span id="quizProgressText">Question 1 of 13</span>
+          <span id="quizScoreText">Score: 0/0</span>
+        </div>
+
+        <!-- Question box -->
+        <div id="quizQuestionBox">
+          <h2 class="quiz-question" id="quizQuestionTitle">Question Text Placeholder</h2>
+          <div class="quiz-options-list" id="quizOptionsList">
+            <!-- Options dynamically loaded -->
+          </div>
+        </div>
+
+        <!-- Answer feedback -->
+        <div id="quizFeedbackBox" class="quiz-feedback-box hidden">
+          <div class="feedback-status" id="quizFeedbackStatus">Correct / Incorrect</div>
+          <div class="feedback-text" id="quizFeedbackBody">Explanation paragraph goes here...</div>
+        </div>
+
+        <!-- Quiz buttons -->
+        <div class="quiz-actions flex-end mt-6">
+          <button class="btn btn-primary" id="quizSubmitBtn">Submit Answer</button>
+          <button class="btn btn-primary hidden" id="quizNextBtn">Next Question</button>
+          <button class="btn btn-secondary hidden" id="quizResultsBtn">View Results</button>
+        </div>
+
+        <!-- Quiz results (Hidden initially) -->
+        <div id="quizResultsBox" class="hidden text-center py-6">
+          <h2 class="text-xl">Assessment Completed</h2>
+          <div class="quiz-final-score text-3xl font-bold my-4" id="quizFinalScore">0 / 13</div>
+          <p class="text-md text-soft mb-6" id="quizFinalFeedback">Feedback on your performance...</p>
+          <button class="btn btn-primary" id="quizRestartBtn">Restart Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 6: CELL TYPES GALLERY -->
+    <section id="cell-typesView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 6</span>
+          <h1>Cortical Cell Types Gallery</h1>
+          <p class="section-desc">Examine the principal excitatory and inhibitory populations that inhabit the cortical column, including their physiological signatures and roles.</p>
+        </div>
+      </div>
+
+      <div class="grid-thirds" id="cellTypesGrid">
+        <!-- Cells generated dynamically from cellTypes data object -->
+      </div>
+    </section>
+
+    <!-- MODULE 7: CORTEX MAP -->
+    <section id="mapView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 7</span>
+          <h1>Cortex Map & Functional Topography</h1>
+          <p class="section-desc">Anatomical distribution of neocortical functions. Click regions on the lateral hemisphere schematic to view structural details.</p>
+        </div>
+      </div>
+
+      <div class="split-layout">
+        <!-- Lateral SVG brain view -->
+        <div class="layout-main card p-0 flex flex-center relative overflow-hidden bg-surface">
+          <div class="svg-diagram-wrapper">
+            <svg id="cortexMapSvg" viewBox="0 0 600 450" class="interactive-svg">
+              <!-- Grid overlay for tech look -->
+              <g stroke="rgba(255,255,255,0.03)" stroke-width="1">
+                <line x1="100" y1="0" x2="100" y2="450" />
+                <line x1="200" y1="0" x2="200" y2="450" />
+                <line x1="300" y1="0" x2="300" y2="450" />
+                <line x1="400" y1="0" x2="400" y2="450" />
+                <line x1="500" y1="0" x2="500" y2="450" />
+                <line x1="0" y1="100" x2="600" y2="100" />
+                <line x1="0" y1="200" x2="600" y2="200" />
+                <line x1="0" y1="300" x2="600" y2="300" />
+                <line x1="0" y1="400" x2="600" y2="400" />
+              </g>
+
+              <!-- Stylized Brain Outline -->
+              <path d="M 120 220 
+                       C 90 190, 110 100, 200 80 
+                       C 280 60, 420 70, 480 120 
+                       C 540 170, 520 280, 480 320 
+                       C 450 350, 390 320, 370 340
+                       C 330 380, 260 380, 230 350
+                       C 200 320, 160 320, 140 300
+                       C 110 270, 150 250, 120 220 Z" 
+                    fill="#141619" stroke="#26292e" stroke-width="3" />
+              
+              <!-- Regions inside brain contour -->
+              <!-- Prefrontal (x from 120 to 250) -->
+              <path id="region-prefrontal" d="M 120 220 C 105 170, 130 110, 200 95 L 240 180 L 220 280 C 170 290, 140 270, 120 220 Z" 
+                    class="svg-map-region" />
+              <text x="160" y="180" class="svg-map-label">Prefrontal</text>
+
+              <!-- Motor / Premotor -->
+              <path id="region-motor" d="M 200 95 C 220 90, 270 85, 290 90 L 300 240 L 240 180 Z" 
+                    class="svg-map-region" />
+              <text x="250" y="130" class="svg-map-label">Motor</text>
+
+              <!-- Somatosensory -->
+              <path id="region-somatosensory" d="M 290 90 C 310 88, 350 85, 370 90 L 360 250 L 300 240 Z" 
+                    class="svg-map-region" />
+              <text x="325" y="130" class="svg-map-label">Sensory</text>
+
+              <!-- Auditory -->
+              <path id="region-auditory" d="M 240 180 L 360 250 L 390 280 C 350 330, 260 330, 220 280 Z" 
+                    class="svg-map-region" />
+              <text x="285" y="240" class="svg-map-label">Auditory</text>
+
+              <!-- Posterior Association -->
+              <path id="region-association" d="M 370 90 C 420 95, 470 120, 480 150 L 440 270 L 360 250 Z" 
+                    class="svg-map-region" />
+              <text x="420" y="170" class="svg-map-label">Association</text>
+
+              <!-- Visual -->
+              <path id="region-visual" d="M 480 150 C 510 180, 500 260, 480 320 C 460 340, 430 320, 440 270 Z" 
+                    class="svg-map-region" />
+              <text x="470" y="235" class="svg-map-label">Visual</text>
+            </svg>
+          </div>
+          
+          <div class="diagram-overlay">
+            <span class="mono-label">Interactive Map &bull; Click cortical zones to inspect connection hierarchy and details</span>
+          </div>
+        </div>
+
+        <!-- Detail Panel -->
+        <div class="layout-side flex flex-col gap-6">
+          <div id="cortexMapPanel" class="card panel-active">
+            <h2 class="panel-title" id="mapTitle">Select a Cortical Region</h2>
+            <p class="panel-subtitle" id="mapSubtitle">Click a region on the lateral hemisphere schematic to view its details.</p>
+            
+            <hr class="panel-divider">
+
+            <div id="mapContent" class="panel-body">
+              <div class="placeholder-text">
+                <p>The cerebral cortex is organized into distinct areas supporting sensory, motor, and associative operations.</p>
+                <p>Modern neuroscience models these areas not in isolation, but as nodes within a hierarchically ordered global network connected by long-range feedforward and feedback projections.</p>
+                <p>Note: the 3D representation can also load anatomical assets `assets/models/real_anatomical_brain.glb` or `assets/models/cortex_regions_brain.glb` to display anatomical boundaries in 3D (detailed in the <a href="#/multiscale">Multiscale Tour</a>).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 8: PLASTICITY (STDP) -->
+    <section id="plasticityView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 8</span>
+          <h1>Synaptic Plasticity (STDP)</h1>
+          <p class="section-desc">Explore Spike-Timing-Dependent Plasticity. Adjust the temporal offset between pre- and post-synaptic action potentials to determine whether a synapse is strengthened or weakened.</p>
+        </div>
+      </div>
+
+      <div class="split-layout">
+        <!-- Interactive Canvas & Controls -->
+        <div class="layout-main card flex flex-col gap-6">
+          <!-- STDP Curve Canvas -->
+          <div class="stdp-canvas-container relative">
+            <div class="flex-between mb-2">
+              <span class="mono-label text-xs">STDP Modification Window (\(\Delta W\) vs \(\Delta t\))</span>
+              <span class="mono-label text-xs text-exc" id="stdpDeltaLabel">&Delta;t = 10 ms</span>
+            </div>
+            <canvas id="stdpCanvas" width="600" height="240" class="stdp-canvas"></canvas>
+          </div>
+
+          <!-- Controls -->
+          <div class="grid-halves">
+            <div class="control-group">
+              <label for="stdpDeltaSlider" class="slider-label flex-between">
+                <span>Spike Time Offset (\(\Delta t = t_{post} - t_{pre}\))</span>
+                <span id="stdpDeltaVal" class="mono-label">10 ms</span>
+              </label>
+              <input type="range" id="stdpDeltaSlider" min="-50" max="50" value="10" class="styled-slider stdp-slider">
+              <div class="flex-between text-3xs text-faint mt-1">
+                <span>Post-before-Pre (LTD)</span>
+                <span>Pre-before-Post (LTP)</span>
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <label for="stdpPairingsSlider" class="slider-label flex-between">
+                <span>Spike Pairings Count</span>
+                <span id="stdpPairingsVal" class="mono-label">60 pairings</span>
+              </label>
+              <input type="range" id="stdpPairingsSlider" min="1" max="120" value="60" class="styled-slider">
+            </div>
+          </div>
+
+          <!-- Live Weight Result Bar -->
+          <div class="weight-meter-container">
+            <div class="flex-between mb-2">
+              <span class="mono-label text-xs">Synaptic Weight (\(w\))</span>
+              <span class="mono-label text-xs" id="stdpWeightText">15.4 nS (+54% change)</span>
+            </div>
+            <div class="weight-bar-bg">
+              <div class="weight-bar-fill" id="stdpWeightFill" style="width: 61.6%;"></div>
+            </div>
+            <div class="flex-between text-3xs text-faint mt-1">
+              <span>\(w_{min}\) = 0.0 nS (Suppressed)</span>
+              <span>\(w_{initial}\) = 10.0 nS</span>
+              <span>\(w_{max}\) = 25.0 nS (Saturated)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Explanatory Text Cards -->
+        <div class="layout-side flex flex-col gap-4">
+          <div class="card bg-surface-2 border-line">
+            <span class="mono-label text-2xs text-exc">Hebbian Postulate</span>
+            <h3 class="mt-2 text-md">Causal Correlation</h3>
+            <p class="text-xs text-soft mt-1">"Cells that fire together, wire together." If a pre-synaptic action potential consistently precedes a post-synaptic spike within a narrow window (e.g. 0 to 20 ms), the causal relationship strengthens the synapse (LTP).</p>
+          </div>
+
+          <div class="card bg-surface-2 border-line">
+            <span class="mono-label text-2xs text-inh">Anti-Hebbian Plasticity</span>
+            <h3 class="mt-2 text-md">Depression Window</h3>
+            <p class="text-xs text-soft mt-1">If the pre-synaptic cell fires *after* the post-synaptic cell, the input was not causal in triggering the output spike. The pathway is deemed redundant, leading to Long-Term Depression (LTD).</p>
+          </div>
+
+          <div class="card bg-surface-2 border-line">
+            <span class="mono-label text-2xs text-accent">Biophysical Mechanism</span>
+            <h3 class="mt-2 text-md">Calcium Influx Rules</h3>
+            <p class="text-xs text-soft mt-1">STDP is governed by NMDA receptor dynamics. Pre-before-post timing causes a high-magnitude calcium surge through NMDA channels, recruiting AMPA receptors (LTP). Post-before-pre causes a smaller, slow calcium influx, prompting AMPA removal (LTD).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 9: PREDICTION / FEEDBACK -->
+    <section id="predictionView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 9</span>
+          <h1>Prediction & Prediction Error</h1>
+          <p class="section-desc">Examine hierarchical predictive coding in cortical circuits. Compare how expected inputs, unexpected deviations, or ambiguous sensory signals alter local circuit gating and projection outputs.</p>
+        </div>
+      </div>
+
+      <div class="split-layout">
+        <!-- Scenarios Selection & Signal Bars -->
+        <div class="layout-main card flex flex-col gap-6">
+          <div class="scenario-selector-row">
+            <button class="btn btn-secondary active" id="scenario-expected">Expected Input</button>
+            <button class="btn btn-secondary" id="scenario-unexpected">Unexpected Input</button>
+            <button class="btn btn-secondary" id="scenario-ambiguous">Ambiguous Input</button>
+          </div>
+
+          <!-- Signal visualizer -->
+          <div class="pred-signals-container">
+            <span class="mono-label text-xs mb-4 block">Normalized Cortical Activity Signals</span>
+            
+            <div class="signal-row">
+              <span class="signal-name">Bottom-up Sensory Input</span>
+              <div class="signal-bar-bg">
+                <div id="bar-bottom-up" class="signal-bar-fill fill-input" style="width: 80%;"></div>
+              </div>
+              <span class="signal-value" id="val-bottom-up">0.80</span>
+            </div>
+
+            <div class="signal-row">
+              <span class="signal-name">Top-down Predictive Template</span>
+              <div class="signal-bar-bg">
+                <div id="bar-predictive-template" class="signal-bar-fill fill-exc" style="width: 80%;"></div>
+              </div>
+              <span class="signal-value" id="val-predictive-template">0.80</span>
+            </div>
+
+            <div class="signal-row">
+              <span class="signal-name">Inhibitory Gating Feedback</span>
+              <div class="signal-bar-bg">
+                <div id="bar-inhibitory-gating" class="signal-bar-fill fill-inh" style="width: 80%;"></div>
+              </div>
+              <span class="signal-value" id="val-inhibitory-gating">0.80</span>
+            </div>
+
+            <div class="signal-row mt-4 pt-4 border-t-line">
+              <span class="signal-name font-bold">L1-3 Prediction Error (\(E_{pred}\))</span>
+              <div class="signal-bar-bg">
+                <div id="bar-prediction-error" class="signal-bar-fill fill-accent" style="width: 10%;"></div>
+              </div>
+              <span class="signal-value font-bold" id="val-prediction-error">0.08</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="layout-side flex flex-col gap-6">
+          <div class="card panel-active" id="predictionDetailsCard">
+            <h2 class="panel-title" id="predScenarioTitle">Expected Input Scenario</h2>
+            <div class="panel-subtitle" id="predScenarioSubtitle">Sensory input matches top-down predictions.</div>
+            
+            <hr class="panel-divider">
+
+            <div class="panel-body text-sm text-soft" id="predScenarioBody">
+              <!-- Dynamically populated description -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 10: BRAIN TO SYNAPSE (3D + animations) -->
+    <section id="multiscaleView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 10</span>
+          <h1>Brain to Synapse: Multiscale Exploration</h1>
+          <p class="section-desc">Journey through cortical organization across seven physical orders of magnitude. Adjust the zoom slider or click the scale buttons below to inspect specific structures.</p>
+        </div>
+      </div>
+
+      <div class="split-layout">
+        <!-- Scale Visualization area -->
+        <div class="layout-main card p-0 overflow-hidden relative min-h-400 flex flex-col bg-surface border-line">
+          <!-- 3D model container (Scale 1: Brain) -->
+          <div id="modelViewerWrapper" class="viewer-container hidden">
+            <!-- model-viewer tag -->
+            <model-viewer id="brain3DModel" 
+                          src="assets/models/real_anatomical_brain.glb" 
+                          alt="Interactive 3D Human Brain Model" 
+                          camera-controls 
+                          auto-rotate 
+                          interaction-prompt="none"
+                          shadow-intensity="1"
+                          class="brain-model-element">
+              <!-- Fallback overlay inside model viewer in case it fails -->
+              <div class="model-error-overlay hidden" id="modelError">
+                <p>Failed to load 3D GLB model</p>
+                <button class="btn btn-secondary btn-sm mt-2" id="triggerFallbackBtn">Run Schematic Canvas Fallback</button>
+              </div>
+            </model-viewer>
+          </div>
+
+          <!-- Canvas animator container (Scales 2 to 7) -->
+          <div id="canvasAnimationWrapper" class="viewer-container relative">
+            <canvas id="multiscaleCanvas" width="600" height="400" class="multiscale-canvas-element"></canvas>
+          </div>
+
+          <!-- Scale Label overlay -->
+          <div class="multiscale-scale-overlay" id="scaleLabelOverlay">
+            Scale: 100 mm &bull; Macro Anatomy
+          </div>
+        </div>
+
+        <!-- Scale Details Inspector -->
+        <div class="layout-side flex flex-col gap-6">
+          <div class="card panel-active" id="multiscaleInfoCard">
+            <span class="mono-label text-2xs text-accent" id="multiscaleMetrics">Scale 1/7 &bull; Size: 150 mm</span>
+            <h2 class="panel-title mt-2" id="multiscaleTitle">Organism-Level Brain</h2>
+            
+            <hr class="panel-divider">
+
+            <div class="panel-body text-sm text-soft" id="multiscaleBody">
+              <!-- Dynamically populated details -->
+            </div>
+            
+            <div class="caveat-box mt-4 text-2xs">
+              <strong>Expected Model File:</strong> <code id="multiscaleModelFile">assets/models/real_anatomical_brain.glb</code>. Before production, replace the placeholder assets with official lab-verified histology reconstructions.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider zoom control / Buttons -->
+      <div class="card mt-6">
+        <div class="multiscale-slider-row">
+          <label for="zoomSlider" class="mono-label text-xs">Zoom Scale Regulator</label>
+          <input type="range" id="zoomSlider" min="0" max="6" value="0" class="styled-slider zoom-slider">
+        </div>
+        
+        <div class="multiscale-buttons-row">
+          <button class="scale-btn active" data-scale="0">1. Brain</button>
+          <button class="scale-btn" data-scale="1">2. Cortex</button>
+          <button class="scale-btn" data-scale="2">3. Layers</button>
+          <button class="scale-btn" data-scale="3">4. Column</button>
+          <button class="scale-btn" data-scale="4">5. Microcircuit</button>
+          <button class="scale-btn" data-scale="5">6. Neurons</button>
+          <button class="scale-btn" data-scale="6">7. Synapse</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 11: ACADEMIC BLOG & AUTHOR Q&A -->
+    <section id="blogView" class="view-section hidden">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">MODULE 11</span>
+          <h1>Academic Blog & Author Q&A</h1>
+          <p class="section-desc">Engage with research staff and explore literature. Comment on sample papers, write post summaries, or query authors. Persists locally.</p>
+        </div>
+      </div>
+
+      <!-- Notice Alert -->
+      <div class="card bg-surface-2 border-line mb-6 flex items-start gap-4">
+        <span class="tag-inh flex-shrink-0 text-xs">ARCHITECTURAL NOTE</span>
+        <div class="text-xs text-soft">
+          <strong>Database Notice:</strong> This module runs entirely in a client-side sandbox using <code>localStorage</code> to store state variables (such as user comments, post updates, and Q&A questions). For a live, public academic portal, this must be integrated with a database backend (e.g., Supabase, Firebase, PostgreSQL, or a laboratory REST API).
+        </div>
+      </div>
+
+      <!-- Tab Row for Sub-Views -->
+      <div class="blog-tab-row mb-6">
+        <button class="blog-tab-btn active" id="btn-blog-read">Read Blog & Comments</button>
+        <button class="blog-tab-btn" id="btn-blog-write">Write a Post</button>
+        <button class="blog-tab-btn" id="btn-blog-author">Ask an Author</button>
+      </div>
+
+      <!-- SUB-VIEW: Read Blog -->
+      <div id="blogReadPanel" class="blog-subview-panel">
+        <div class="flex flex-col gap-6" id="blogPostsList">
+          <!-- Dynamically populated posts -->
+        </div>
+      </div>
+
+      <!-- SUB-VIEW: Write Post -->
+      <div id="blogWritePanel" class="blog-subview-panel hidden max-w-2xl mx-auto card">
+        <h2 class="card-title">Compose Research Post</h2>
+        <form id="writePostForm" class="flex flex-col gap-4 mt-4">
+          <div class="control-group">
+            <label for="postTitle" class="text-sm">Title</label>
+            <input type="text" id="postTitle" required placeholder="e.g., Dendritic Integration in Layer V Pyramidal Cells" class="input-text">
+          </div>
+          <div class="control-group">
+            <label for="postAuthor" class="text-sm">Author</label>
+            <input type="text" id="postAuthor" required placeholder="Dr. Jane Doe" class="input-text">
+          </div>
+          <div class="control-group">
+            <label for="postSummary" class="text-sm">Short Abstract / Summary</label>
+            <input type="text" id="postSummary" required placeholder="Brief summary of findings..." class="input-text">
+          </div>
+          <div class="control-group">
+            <label for="postContent" class="text-sm">Post Body Content</label>
+            <textarea id="postContent" required rows="8" placeholder="Write academic findings, data highlights, and discussion points..." class="input-text"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary self-start">Publish Post</button>
+        </form>
+      </div>
+
+      <!-- SUB-VIEW: Ask an Author -->
+      <div id="blogAuthorPanel" class="blog-subview-panel hidden">
+        <div class="split-layout">
+          <!-- Authors list -->
+          <div class="layout-main flex flex-col gap-4" id="authorsList">
+            <!-- Dynamically populated authors list -->
+          </div>
+
+          <!-- Ask form + past questions -->
+          <div class="layout-side flex flex-col gap-6">
+            <div class="card">
+              <h2 class="card-title" id="askAuthorTitle">Submit Question to Dr. Marcus Chen</h2>
+              <form id="askAuthorForm" class="flex flex-col gap-4 mt-4">
+                <input type="hidden" id="selectedAuthorId" value="chen">
+                <div class="control-group">
+                  <label for="authorQuestioner" class="text-sm">Your Name</label>
+                  <input type="text" id="authorQuestioner" required placeholder="e.g., Sarah Smith, Grad Student" class="input-text">
+                </div>
+                <div class="control-group">
+                  <label for="authorQuestionText" class="text-sm">Question</label>
+                  <textarea id="authorQuestionText" required rows="4" placeholder="Ask about their research, methods, or models..." class="input-text"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Question</button>
+              </form>
+            </div>
+
+            <!-- Past Questions list -->
+            <div class="card">
+              <h3 class="card-title text-md">Sent Queries & Answers</h3>
+              <div id="queriesList" class="flex flex-col gap-4 mt-4">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sticky Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <img src="assets/whic_logo.svg" alt="WHIC Logo" class="logo-img footer-logo">
+        <p class="footer-note">What's Happening in the Cortex? &bull; Academic Portal</p>
+      </div>
+      <div class="footer-right">
+        <p class="footer-license">Released for educational and laboratory use. All content subject to structural approximations.</p>
+        <p class="footer-warning">This site operates as a client-side prototype. Data persists in your browser cache.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script bundle -->
+  <script src="script.js"></script>
+</body>
+</html>
