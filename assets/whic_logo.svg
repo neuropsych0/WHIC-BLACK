@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="100%" height="100%">
+  <defs>
+    <!-- Smooth gradient for the cortical icon -->
+    <linearGradient id="cortexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="oklch(0.74 0.10 200)" />
+      <stop offset="100%" stop-color="oklch(0.68 0.17 27)" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cortical Icon -->
+  <g transform="translate(10, 15)">
+    <!-- Stylized representation of cortical folds / waves -->
+    <path d="M 10 35 C 10 20, 20 15, 30 25 C 40 35, 45 15, 55 25 C 65 35, 70 20, 80 30 C 90 40, 95 20, 105 35" 
+          fill="none" stroke="url(#cortexGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 15 45 C 15 35, 25 30, 35 40 C 45 50, 50 30, 60 40 C 70 50, 75 35, 85 45" 
+          fill="none" stroke="oklch(0.74 0.10 200)" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+    <!-- Horizontal scale/laminar lines -->
+    <line x1="8" y1="52" x2="107" y2="52" stroke="#26292e" stroke-width="1.5" stroke-dasharray="3 3" />
+    <line x1="8" y1="58" x2="107" y2="58" stroke="#26292e" stroke-width="1.5" />
+  </g>
+
+  <!-- Typography -->
+  <!-- WHIC acronym -->
+  <text x="130" y="42" font-family="Source Serif 4, Georgia, serif" font-weight="700" font-size="28" fill="#f3f1ec" letter-spacing="1.5">WHIC</text>
+  <!-- Subtitle -->
+  <text x="130" y="58" font-family="IBM Plex Sans, sans-serif" font-weight="500" font-size="9" fill="#7d7a73" letter-spacing="2">CORTICAL EXPLORER</text>
+</svg>

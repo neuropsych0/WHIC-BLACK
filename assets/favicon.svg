@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cortexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="oklch(0.74 0.10 200)" />
+      <stop offset="100%" stop-color="oklch(0.68 0.17 27)" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#0c0d0f" rx="20"/>
+  <g transform="translate(-2, 10)">
+    <path d="M 15 45 C 15 25, 27 20, 39 32 C 51 44, 57 20, 69 32 C 81 44, 87 25, 99 37" 
+          fill="none" stroke="url(#cortexGrad)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 21 57 C 21 45, 33 40, 45 52 C 57 64, 63 40, 75 52" 
+          fill="none" stroke="oklch(0.74 0.10 200)" stroke-width="2.5" stroke-linecap="round" opacity="0.6" />
+    <line x1="12" y1="70" x2="88" y2="70" stroke="#26292e" stroke-width="2" stroke-dasharray="4 4" />
+    <line x1="12" y1="78" x2="88" y2="78" stroke="#26292e" stroke-width="2" />
+  </g>
+</svg>
