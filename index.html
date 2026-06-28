@@ -15,7 +15,12 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
   
-  <!-- 3D model-viewer for brain model -->
+  <!-- Three.js for 3D brain model -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  
+  <!-- 3D model-viewer for Cell Gallery -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 </head>
 <body>
@@ -24,14 +29,17 @@
   <div class="top-banner">
     <div class="top-banner-container">
       <div class="sponsor-logo-group nsf-group">
-        <img src="assets/nsf_logo.svg" alt="NSF Logo" class="sponsor-logo">
+        <img src="assets/nsf_logo.png" alt="NSF Logo" class="sponsor-logo nsf-logo">
         <span class="nsf-text">CAREER Award #2437304</span>
       </div>
       <div class="sponsor-logo-group">
+        <a href="https://sc.edu/study/colleges_schools/engineering_and_computing/" target="_blank" rel="noopener noreferrer"></a>
         <img src="assets/usc_logo.svg" alt="USC Engineering Logo" class="sponsor-logo">
       </div>
       <div class="sponsor-logo-group">
-        <img src="assets/lina_logo.png" alt="LINA Lab Logo" class="sponsor-logo">
+        <a href="https://research.cec.sc.edu/lina" target="_blank" rel="noopener noreferrer">
+          <img src="assets/lina_logo.png" alt="LINA Lab Logo" class="sponsor-logo lina-logo">
+        </a>
       </div>
     </div>
   </div>
@@ -1018,24 +1026,27 @@
         <div class="layout-main card p-0 overflow-hidden relative min-h-400 flex flex-col bg-surface border-line">
           <!-- 3D model container (Scale 1: Brain) -->
           <div id="modelViewerWrapper" class="viewer-container hidden">
-            <!-- model-viewer tag -->
-            <model-viewer id="brain3DModel" 
-                          src="assets/models/real_anatomical_brain.glb" 
-                          alt="Interactive 3D Human Brain Model" 
-                          camera-controls 
-                          auto-rotate 
-                          interaction-prompt="none"
-                          shadow-intensity="1"
-                          class="brain-model-element">
+            <div id="threejs-container" class="brain-model-element">
               <!-- Fallback overlay inside model viewer in case it fails -->
               <div class="model-error-overlay hidden" id="modelError">
                 <p>Failed to load 3D GLB model</p>
                 <button class="btn btn-secondary btn-sm mt-2" id="triggerFallbackBtn">Run Schematic Canvas Fallback</button>
               </div>
-            </model-viewer>
+            </div>
           </div>
 
-          <!-- Canvas animator container (Scales 2 to 7) -->
+          <!-- NIH 3D Citation for brain model -->
+          <div class="brain-citation-box" id="brainCitationBox">
+            <span class="brain-citation-label">3D Model Attribution</span>
+            <p class="brain-citation-text">
+              HRA (Human Reference Atlas). <em>Brain, Male</em> (Version 1) [3D model]. NIH 3D.
+              <a href="https://3d.nih.gov/entries/3DPX-020960" target="_blank" rel="noopener noreferrer">https://3d.nih.gov/entries/3DPX-020960</a>.
+              License: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+              Source data: Ding et al. (2016), Allen Brain Reference Atlas &amp; Ackerman (1998), The Visible Human Project.
+            </p>
+          </div>
+
+
           <div id="canvasAnimationWrapper" class="viewer-container relative">
             <canvas id="multiscaleCanvas" width="600" height="400" class="multiscale-canvas-element"></canvas>
           </div>

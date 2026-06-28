@@ -7,8 +7,8 @@
     --surface:   #141619;   /* cards / panels */
     --surface-2: #1b1e22;   /* insets, raised rows */
     --ink:       #f3f1ec;   /* primary text, warm off-white */
-    --ink-soft:  #b6b3ab;   /* body text */
-    --ink-faint: #7d7a73;   /* captions, mono labels */
+    --ink-soft:  #83837f;   /* body text */
+    --ink-faint: #a09f9a;   /* captions, mono labels */
     --line:      #26292e;   /* hairline borders */
     --line-2:    #353941;   /* stronger borders */
   
@@ -178,7 +178,7 @@
   
   /* Top Sponsor Banner */
   .top-banner {
-    background-color: var(--canvas-100);
+    background-color: #4e4f51; /* Grey background for visibility */
     border-bottom: 1px solid var(--line);
     padding: 0.6rem 0;
     width: 100%;
@@ -204,21 +204,42 @@
   .sponsor-logo {
     height: 28px;
     width: auto;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
   
   .sponsor-logo:hover {
+    transform: scale(1.05);
+  }
+
+  .nsf-logo {
+    height: 48px; /* Bigger NSF Logo */
+  }
+  
+  .nsf-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem !important;
+  }
+
+  .lina-logo {
+    height: 44px; /* Make it bigger, NO color change */
+    opacity: 0.9;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .lina-logo:hover {
     opacity: 1;
+    transform: scale(1.05);
   }
   
   .nsf-text {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--ink-soft);
+    font-size: 0.75rem; /* slightly larger for readability */
+    color: #111827; /* Dark text for grey background */
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-left: 0.25rem;
+    font-weight: 600;
   }
 
   /* Sticky Header */
@@ -1199,19 +1220,56 @@
     flex-direction: column;
   }
   
-  .cell-glyph-container {
-    height: 110px;
+  /* Old SVG glyph styles replaced by 3D model-viewer */
+  .cell-model-wrapper {
+    position: relative;
+    height: 220px;
     border: 1px solid var(--line);
-    background-color: #0c0d0f;
-    border-radius: 4px;
+    background: radial-gradient(ellipse at center, #0f1318 0%, #080a0c 100%);
+    border-radius: 8px;
     margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
   }
-  .cell-glyph-svg {
-    height: 80%;
-    width: auto;
+
+  .cell-model-viewer {
+    width: 100%;
+    height: 100%;
+    --poster-color: transparent;
+    background: transparent;
+  }
+
+  .cell-model-hint {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0.6;
+  }
+
+  .cell-model-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cell-model-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--line);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
   
   .cell-props-row {
@@ -1358,7 +1416,43 @@
     height: 100%;
     --poster-color: transparent;
   }
-  
+
+  /* NIH 3D Citation Box */
+  .brain-citation-box {
+    background-color: rgba(255,255,255,0.03);
+    border-top: 1px solid var(--line);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .brain-citation-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .brain-citation-text {
+    font-size: 0.65rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .brain-citation-text a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .brain-citation-text a:hover {
+    text-decoration: underline;
+  }
+
+
   .multiscale-canvas-element {
     display: block;
     width: 100%;

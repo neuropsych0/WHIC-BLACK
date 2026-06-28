@@ -1772,42 +1772,27 @@ function initCellTypesModule() {
     const card = document.createElement("div");
     card.className = "cell-card card";
 
-    // Build SVG Glyphs placeholder based on type
-    let glyphPath = "";
-    if (cell.id === "pyramidal") {
-      glyphPath = `<polygon points="50,20 40,80 60,80" fill="none" stroke="var(--exc)" stroke-width="2.5"/>
-                   <line x1="50" y1="20" x2="50" y2="5" stroke="var(--exc)" stroke-width="1.5"/>
-                   <line x1="40" y1="80" x2="30" y2="95" stroke="var(--exc)" stroke-width="1.5"/>
-                   <line x1="60" y1="80" x2="70" y2="95" stroke="var(--exc)" stroke-width="1.5"/>`;
-    } else if (cell.id === "stellate") {
-      glyphPath = `<circle cx="50" cy="50" r="12" fill="none" stroke="var(--exc)" stroke-width="2.5"/>
-                   <line x1="50" y1="38" x2="50" y2="20" stroke="var(--exc)" stroke-width="1.5"/>
-                   <line x1="50" y1="62" x2="50" y2="80" stroke="var(--exc)" stroke-width="1.5"/>
-                   <line x1="38" y1="50" x2="20" y2="50" stroke="var(--exc)" stroke-width="1.5"/>
-                   <line x1="62" y1="50" x2="80" y2="50" stroke="var(--exc)" stroke-width="1.5"/>
-                   <line x1="41" y1="41" x2="30" y2="30" stroke="var(--exc)" stroke-width="1.5"/>
-                   <line x1="59" y1="59" x2="70" y2="70" stroke="var(--exc)" stroke-width="1.5"/>`;
-    } else if (cell.id === "pv_basket") {
-      glyphPath = `<circle cx="50" cy="50" r="20" fill="none" stroke="var(--inh)" stroke-width="2.5"/>
-                   <path d="M 30,50 Q 50,75 70,50" fill="none" stroke="var(--inh)" stroke-width="1.5" stroke-dasharray="3 3"/>
-                   <path d="M 30,50 Q 50,25 70,50" fill="none" stroke="var(--inh)" stroke-width="1.5" stroke-dasharray="3 3"/>`;
-    } else if (cell.id === "sst_martinotti") {
-      glyphPath = `<circle cx="50" cy="70" r="12" fill="none" stroke="var(--inh)" stroke-width="2.5"/>
-                   <line x1="50" y1="58" x2="50" y2="15" stroke="var(--inh)" stroke-width="2"/>
-                   <path d="M 35,15 C 45,5, 55,5, 65,15" fill="none" stroke="var(--inh)" stroke-width="1.5"/>`;
-    } else if (cell.id === "vip_htr3a") {
-      glyphPath = `<ellipse cx="50" cy="50" rx="10" ry="18" fill="none" stroke="var(--inh)" stroke-width="2.5"/>
-                   <line x1="50" y1="32" x2="50" y2="10" stroke="var(--inh)" stroke-width="1.5"/>
-                   <line x1="50" y1="68" x2="50" y2="90" stroke="var(--inh)" stroke-width="1.5"/>`;
-    }
-
     const isExc = cell.identity.includes("Excitatory");
 
     card.innerHTML = `
-      <div class="cell-glyph-container">
-        <svg viewBox="0 0 100 100" class="cell-glyph-svg">
-          ${glyphPath}
-        </svg>
+      <div class="cell-model-wrapper">
+        <model-viewer
+          src="assets/models/${cell.id}.glb"
+          alt="3D model of ${cell.name}"
+          camera-controls
+          auto-rotate
+          auto-rotate-delay="0"
+          rotation-per-second="30deg"
+          interaction-prompt="none"
+          shadow-intensity="0"
+          environment-image="neutral"
+          style="--poster-color:transparent;width:100%;height:100%;background:transparent;"
+          class="cell-model-viewer">
+          <div slot="progress-bar" class="cell-model-loading">
+            <span class="cell-model-spinner"></span>
+          </div>
+        </model-viewer>
+        <div class="cell-model-hint">&#8635; drag to rotate &bull; scroll to zoom</div>
       </div>
       <span class="card-tag ${isExc ? 'tag-exc' : 'tag-inh'}">${cell.identity}</span>
       <h3>${cell.name}</h3>
@@ -2256,6 +2241,84 @@ function initMultiscaleModule() {
   updateMultiscaleView();
 }
 
+let threeScene, threeCamera, threeRenderer, threeBrainModel, threeControls, threeAnimFrameId;
+
+function initThreeJSBrain() {
+  const container = document.getElementById("threejs-container");
+  if (!container || threeRenderer) return;
+
+  const width = container.clientWidth || 600;
+  const height = container.clientHeight || 400;
+
+  threeScene = new THREE.Scene();
+  
+  threeCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+  threeCamera.position.set(0, 0, 5);
+
+  threeRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  threeRenderer.setSize(width, height);
+  threeRenderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(threeRenderer.domElement);
+
+  threeControls = new THREE.OrbitControls(threeCamera, threeRenderer.domElement);
+  threeControls.enableDamping = true;
+  threeControls.autoRotate = true;
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  threeScene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  directionalLight.position.set(5, 10, 7.5);
+  threeScene.add(directionalLight);
+
+  const loader = new THREE.GLTFLoader();
+  loader.load(
+    'assets/models/3d-vh-m-allen-brain.glb',
+    function (gltf) {
+      threeBrainModel = gltf.scene;
+      const box = new THREE.Box3().setFromObject(threeBrainModel);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
+      
+      const scale = 3.5 / maxDim;
+      threeBrainModel.scale.set(scale, scale, scale);
+      threeBrainModel.position.sub(center.multiplyScalar(scale));
+
+      threeScene.add(threeBrainModel);
+    },
+    undefined,
+    function (error) {
+      console.error("Three.js GLTF Load Error:", error);
+      document.getElementById("modelError").classList.remove("hidden");
+    }
+  );
+
+  window.addEventListener('resize', () => {
+    if (state.zoomScale !== 0 || !threeRenderer) return;
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    threeRenderer.setSize(w, h);
+    threeCamera.aspect = w / h;
+    threeCamera.updateProjectionMatrix();
+  });
+}
+
+function animateThreeJS() {
+  if (state.zoomScale !== 0) return;
+  threeAnimFrameId = requestAnimationFrame(animateThreeJS);
+  if (threeControls) threeControls.update();
+  if (threeRenderer && threeScene && threeCamera) {
+    threeRenderer.render(threeScene, threeCamera);
+  }
+}
+
+function stopThreeJS() {
+  if (threeAnimFrameId) {
+    cancelAnimationFrame(threeAnimFrameId);
+    threeAnimFrameId = null;
+  }
+}
+
 function updateMultiscaleView() {
   const step = zoomSteps[state.zoomScale];
   
@@ -2273,32 +2336,22 @@ function updateMultiscaleView() {
   const canvasWrapper = document.getElementById("canvasAnimationWrapper");
   
   stopMultiscaleAnimation();
+  stopThreeJS();
 
   if (state.zoomScale === 0) {
-    // Brain scale: Show <model-viewer>
+    // Brain scale: Show Three.js
     canvasWrapper.classList.add("hidden");
     modelWrapper.classList.remove("hidden");
     
-    // Check if model-viewer loads, handle errors
-    const model = document.getElementById("brain3DModel");
-    const errOverlay = document.getElementById("modelError");
-    
-    // Simulate model error checks or handle actual failure
-    // We add a short timer to check if it's loading, else show trigger fallback button
-    errOverlay.classList.add("hidden");
-    
-    // Check for glb load failures
-    model.onerror = () => {
-      errOverlay.classList.remove("hidden");
-    };
+    initThreeJSBrain();
+    animateThreeJS();
     
     document.getElementById("triggerFallbackBtn").onclick = () => {
-      errOverlay.classList.add("hidden");
+      document.getElementById("modelError").classList.add("hidden");
       modelWrapper.classList.add("hidden");
       canvasWrapper.classList.remove("hidden");
       runMultiscaleFallbackCanvas();
     };
-
   } else {
     // Histology/EM animations: Show Canvas
     modelWrapper.classList.add("hidden");
