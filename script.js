@@ -1,10 +1,10 @@
-/* ==========================================================================
+/* 
    WHIC CORTICAL EXPLORER - CORE JAVASCRIPT
-   ========================================================================== */
+    */
 
-/* ==========================================================================
+/* 
    1. EDITABLE SCIENTIFIC DATA OBJECTS (At the top of script.js)
-   ========================================================================== */
+   */
 
 const microPopulations = {
   L13_exc: {
@@ -761,9 +761,9 @@ function showNotification(message) {
   }, 4000);
 }
 
-/* ==========================================================================
+/* 
    3. DROPDOWNS & HAMBURGER (Header Navigation)
-   ========================================================================== */
+  */
 
 function setupNavigationListeners() {
   const hamburger = document.getElementById("menuToggle");
@@ -980,9 +980,9 @@ function initMicrocircuitModule() {
   });
 }
 
-/* ==========================================================================
+/* 
    5. MODULE 2: CORTICAL LAYERS EXPLORER
-   ========================================================================== */
+*/
 
 function initLayersModule() {
   const tabs = document.querySelectorAll(".layer-tab-btn");
@@ -1033,9 +1033,9 @@ function initLayersModule() {
   }
 }
 
-/* ==========================================================================
+/* 
    6. MODULE 3: SIGNAL FLOW PUZZLE
-   ========================================================================== */
+ */
 
 let clickedTileElement = null; // helper for click-to-place fallback
 
@@ -1189,9 +1189,9 @@ function initPuzzleModule() {
   };
 }
 
-/* ==========================================================================
+/* 
    7. MODULE 4: EXCITATION VS INHIBITION (Needle + Raster)
-   ========================================================================== */
+    */
 
 function initEiModule() {
   const excSlider = document.getElementById("excSlider");
@@ -1760,9 +1760,9 @@ document.getElementById("quizRestartBtn").onclick = () => {
   initQuizModule();
 };
 
-/* ==========================================================================
+/* 
    9. MODULE 6: CELL TYPES GALLERY
-   ========================================================================== */
+   */
 
 function initCellTypesModule() {
   const grid = document.getElementById("cellTypesGrid");
@@ -1810,9 +1810,9 @@ function initCellTypesModule() {
   });
 }
 
-/* ==========================================================================
+/* 
    10. MODULE 7: CORTEX MAP
-   ========================================================================== */
+  */
 
 function initMapModule() {
   const mapSvg = document.getElementById("cortexMapSvg");
@@ -1877,9 +1877,9 @@ function initMapModule() {
   });
 }
 
-/* ==========================================================================
+/* 
    11. MODULE 8: PLASTICITY (STDP Curve)
-   ========================================================================== */
+   */
 
 function initPlasticityModule() {
   const deltaSlider = document.getElementById("stdpDeltaSlider");
@@ -2108,9 +2108,9 @@ function updateStdpPlot() {
   ctx.fillText("Pairings Density Histogram (Center: \u0394t)", indicatorX - 45 > 20 ? indicatorX - 45 : 20, h - 45);
 }
 
-/* ==========================================================================
+/* 
    12. MODULE 9: PREDICTION / FEEDBACK SCENARIOS
-   ========================================================================== */
+   */
 
 let predAnimTime = 0;
 
@@ -2206,9 +2206,9 @@ function stopPredictionAnimation() {
   }
 }
 
-/* ==========================================================================
+/* 
    13. MODULE 10: BRAIN TO SYNAPSE TOUR
-   ========================================================================== */
+   */
 
 function initMultiscaleModule() {
   const slider = document.getElementById("zoomSlider");
@@ -2537,9 +2537,9 @@ function runMultiscaleCanvasAnimation() {
     const cy = canvas.height / 2;
 
     if (scale === 1) {
-      // ====================================================================
+      // 
       // 2. CORTEX: Rotating 3D wireframe ribbon block (Blue Brain aesthetic)
-      // ====================================================================
+      //
       ctx.strokeStyle = "rgba(100, 255, 255, 0.15)";
       ctx.lineWidth = 1;
       
@@ -2595,9 +2595,9 @@ function runMultiscaleCanvasAnimation() {
       }
 
     } else if (scale === 2) {
-      // ====================================================================
+      // 
       // 3. LAYERS: Stacked semi-transparent 3D Planes & Cell point clouds
-      // ====================================================================
+      // 
       // Sort cell coordinates based on depth for 3D drawing order
       const projectedCells = layerCells.map(c => {
         const proj = project3D(c.x, c.y, c.z, cx, cy, angleX, angleY, 1.0);
@@ -2663,9 +2663,9 @@ function runMultiscaleCanvasAnimation() {
       ctx.stroke();
 
     } else if (scale === 3) {
-      // ====================================================================
+      // 
       // 4. COLUMN: Spinning 3D cylinder with vertical dendritic trees
-      // ====================================================================
+      //
       const cylinderH = 260;
       const radius = 80;
       
@@ -2739,9 +2739,9 @@ function runMultiscaleCanvasAnimation() {
       drawTree3D(35, 40, -10);
 
     } else if (scale === 4) {
-      // ====================================================================
+      // 
       // 5. CANONICAL MICROCIRCUIT: Glowing rotating 3D network node display
-      // ====================================================================
+      // 
       const nodes3D = [
         { id: "L13_exc", x: -80, y: -100, z: 0, c: "var(--exc)", bg: "var(--exc-bg)" },
         { id: "L13_inh", x: 80, y: -100, z: 0, c: "var(--inh)", bg: "var(--inh-bg)" },
@@ -2810,9 +2810,9 @@ function runMultiscaleCanvasAnimation() {
       });
 
     } else if (scale === 5) {
-      // ====================================================================
+      // 
       // 6. NEURONS: High-fidelity rotating 3D Pyramidal Cell wireframe
-      // ====================================================================
+      // 
       ctx.save();
       
       const zoomVal = 1.25;
@@ -2889,9 +2889,9 @@ function runMultiscaleCanvasAnimation() {
       ctx.restore();
 
     } else if (scale === 6) {
-      // ====================================================================
+      // 
       // 7. SYNAPSE: Rotating 3D Synaptic Cleft with vesicles and receptors
-      // ====================================================================
+      // 
       ctx.save();
       const zoomVal = 1.1;
 
@@ -3012,9 +3012,9 @@ function stopMultiscaleAnimation() {
   }
 }
 
-/* ==========================================================================
+/* 
    14. MODULE 11: ACADEMIC BLOG & AUTHOR Q&A
-   ========================================================================== */
+   */
 
 function initBlogModule(path) {
   const readPanel = document.getElementById("blogReadPanel");
@@ -3251,9 +3251,9 @@ function renderAuthorQuestions() {
   });
 }
 
-/* ==========================================================================
+/* 
    15. INITIALIZATION
-   ========================================================================= */
+   */
 
 window.addEventListener("load", () => {
   initBlogDb();
