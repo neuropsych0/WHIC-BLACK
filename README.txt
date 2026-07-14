@@ -2,7 +2,7 @@
 WHIC CORTICAL EXPLORER - ACADEMIC PORTAL DOCUMENTATION
 ========================================================================
 
-Author: Antigravity AI Coding Assistant
+Author: Bahar Sert
 Audience: Research Staff, Lab Members, Graduate Instructors
 
 This directory contains the source files for the "What's Happening in the Cortex" (WHIC) Cortical Explorer, a graduate-level interactive web portal for learning cortical organization across scales.
